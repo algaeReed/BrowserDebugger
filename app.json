@@ -31,6 +31,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d8b401ae-bfc9-452a-9c53-b2e76b5df7ad"
+      }
+    },
+    "owner": "jefferylong"
   }
 }
