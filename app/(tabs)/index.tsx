@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import AppWebView from "@/components/Webview";
+import AppWebView from "@/app/View/Webview";
 
 export default function HomeScreen() {
   return <AppWebView />;

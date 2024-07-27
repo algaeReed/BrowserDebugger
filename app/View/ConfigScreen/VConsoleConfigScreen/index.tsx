@@ -1,9 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
-import SettingCard from "@/app/View/Setting";
-
-export default function TabSettingScreen() {
-  return <SettingCard />;
+export default function VConsoleConfigScreen() {
+  return <Text>VConsoleConfigScreen</Text>;
 }
 
 const styles = StyleSheet.create({

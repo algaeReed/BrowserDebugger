@@ -2,7 +2,7 @@ import Constants from "expo-constants";
 import { StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 
-export default function AppWebView() {
+export default function WebViewScreen() {
   return (
     <WebView
       source={{ uri: "https://reactnative.dev/" }}
