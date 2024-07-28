@@ -37,8 +37,8 @@ export default function RootLayout() {
         <Stack.Screen name="+not-found" />
 
         <Stack.Screen
-          name="View/ConfigScreen/LocalStorageConfigScreen/index"
-          options={{ title: "Profile" }}
+          name="View/ConfigScreen/WebViewConfigScreen/index"
+          options={{ title: "WebView" }}
         />
       </Stack>
     </ThemeProvider>

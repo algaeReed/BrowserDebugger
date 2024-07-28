@@ -1,20 +1,42 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
+import { useFocusEffect } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
+import { VCONSOLE_SCRIPT } from "./script";
 
 export default function WebViewScreen() {
   const [url, setUrl] = useState<string | null>(null);
   const [htmlContent, setHtmlContent] = useState<string>("");
 
-  useEffect(() => {
-    fetchUrl();
-  }, []);
+  const [isDebuggerOn, setIsDebuggerOn] = useState(false);
 
+  useEffect(() => {}, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      Alert.alert("focused");
+
+      fetchUrl();
+      fetch_vConsole_status();
+      return () => {};
+    }, [])
+  );
+
+  const fetch_vConsole_status = async () => {
+    try {
+      const storage_vConsole_status = await AsyncStorage.getItem(
+        "@storage_vConsole_status"
+      );
+      setIsDebuggerOn(storage_vConsole_status === "true");
+    } catch (error) {
+      console.log("storage_vConsole_status_error", error);
+    }
+  };
   const fetchUrl = async () => {
     try {
-      const value = await AsyncStorage.getItem("@storage_Key");
+      const value = await AsyncStorage.getItem("@storage_webview_uri");
       if (value !== null) {
         setUrl(value);
       } else {
@@ -56,7 +78,8 @@ export default function WebViewScreen() {
         source={url ? { uri: url } : { html: htmlContent }}
         onError={(e) => console.log("Error loading URL:", e)}
         style={{ flex: 1 }}
-        injectedJavaScript={`window.ReactNativeWebView.postMessage('loaded');`}
+        injectedJavaScript={isDebuggerOn ? VCONSOLE_SCRIPT : ""}
+        // injectedJavaScript={`window.ReactNativeWebView.postMessage('loaded');`}
         onMessage={(event) => {
           if (event.nativeEvent.data === "refresh") {
             fetchUrl(); // 重新获取URL并更新

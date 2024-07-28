@@ -37,11 +37,11 @@ export default function SettingCard() {
 
       <Card
         onPress={() => {
-          router.push("/View/ConfigScreen/VConsoleConfigScreen");
+          router.push("/View/ConfigScreen/LocalStorageConfigScreen");
         }}
       >
         <Card.Title
-          title="vConsole"
+          title="localStorage"
           subtitle="Card Subtitle"
           left={(props) => <Avatar.Icon {...props} icon="folder" />}
           right={(props) => (
@@ -52,11 +52,11 @@ export default function SettingCard() {
 
       <Card
         onPress={() => {
-          router.push("/View/ConfigScreen/LocalStorageConfigScreen");
+          router.push("/View/ConfigScreen/VConsoleConfigScreen");
         }}
       >
         <Card.Title
-          title="localStorage"
+          title="vConsole"
           subtitle="Card Subtitle"
           left={(props) => <Avatar.Icon {...props} icon="folder" />}
           right={(props) => (
