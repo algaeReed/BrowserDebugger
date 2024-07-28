@@ -20,53 +20,47 @@ export default function SettingCard() {
         <ThemedText type="title">Setting</ThemedText>
       </ThemedView>
 
-      <Card>
+      <Card
+        onPress={() => {
+          router.push("/View/ConfigScreen/WebViewConfigScreen");
+        }}
+      >
         <Card.Title
           title="WebView"
           subtitle="Card Subtitle"
           left={(props) => <Avatar.Icon {...props} icon="folder" />}
           right={(props) => (
-            <IconButton
-              {...props}
-              icon="dots-vertical"
-              onPress={() => {
-                router.push("/View/ConfigScreen/WebViewConfigScreen");
-              }}
-            />
+            <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
           )}
         />
       </Card>
 
-      <Card>
+      <Card
+        onPress={() => {
+          router.push("/View/ConfigScreen/VConsoleConfigScreen");
+        }}
+      >
         <Card.Title
           title="vConsole"
           subtitle="Card Subtitle"
           left={(props) => <Avatar.Icon {...props} icon="folder" />}
           right={(props) => (
-            <IconButton
-              {...props}
-              icon="dots-vertical"
-              onPress={() => {
-                router.push("/View/ConfigScreen/VConsoleConfigScreen");
-              }}
-            />
+            <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
           )}
         />
       </Card>
 
-      <Card>
+      <Card
+        onPress={() => {
+          router.push("/View/ConfigScreen/LocalStorageConfigScreen");
+        }}
+      >
         <Card.Title
           title="localStorage"
           subtitle="Card Subtitle"
           left={(props) => <Avatar.Icon {...props} icon="folder" />}
           right={(props) => (
-            <IconButton
-              {...props}
-              icon="dots-vertical"
-              onPress={() => {
-                router.push("/View/ConfigScreen/LocalStorageConfigScreen");
-              }}
-            />
+            <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
           )}
         />
       </Card>
