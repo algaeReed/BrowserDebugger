@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { Avatar, Card, Switch, Text } from "react-native-paper";
+import { Avatar, Card, Switch } from "react-native-paper";
 
 export default function VConsoleConfigScreen() {
   const [isDebuggerOn, setIsDebuggerOn] = useState(false);
@@ -57,7 +57,7 @@ export default function VConsoleConfigScreen() {
           )}
         />
       </Card>
-      <Text>{JSON.stringify(isDebuggerOn)}</Text>
+      {/* <Text>{JSON.stringify(isDebuggerOn)}</Text> */}
     </ParallaxScrollView>
   );
 }

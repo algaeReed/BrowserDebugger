@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
 import { useFocusEffect } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { VCONSOLE_SCRIPT } from "./script";
 
@@ -16,7 +16,7 @@ export default function WebViewScreen() {
 
   useFocusEffect(
     React.useCallback(() => {
-      Alert.alert("focused");
+      // Alert.alert("focused");
 
       fetchUrl();
       fetch_vConsole_status();
