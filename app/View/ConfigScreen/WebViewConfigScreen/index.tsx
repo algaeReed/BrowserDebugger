@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  ToastAndroid,
   View,
 } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
@@ -73,6 +74,10 @@ export default function WebViewConfigScreen() {
       } catch (e) {
         console.error("Failed to save value:", e);
       }
+    } else if (inputValue == "") {
+      await AsyncStorage.removeItem("@storage_webview_uri");
+      ToastAndroid.show("remove", ToastAndroid.SHORT);
+      router.back();
     } else {
       Alert.alert(
         "Invalid input. Please enter a valid domain name or IP address."

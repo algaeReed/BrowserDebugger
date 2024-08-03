@@ -40,6 +40,14 @@ export default function RootLayout() {
           name="View/ConfigScreen/WebViewConfigScreen/index"
           options={{ title: "WebView" }}
         />
+        <Stack.Screen
+          name="View/ConfigScreen/LocalStorageConfigScreen/index"
+          options={{ title: "LocalStorage" }}
+        />
+        <Stack.Screen
+          name="View/ConfigScreen/VConsoleConfigScreen/index"
+          options={{ title: "VConsole" }}
+        />
       </Stack>
     </ThemeProvider>
   );

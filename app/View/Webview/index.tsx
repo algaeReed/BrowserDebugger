@@ -1,10 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ToastAndroid, View } from "react-native";
 import { WebView } from "react-native-webview";
-import { VCONSOLE_SCRIPT } from "./script";
+import { Error_loading_content, No_URL_found, VCONSOLE_SCRIPT } from "./script";
 
 export default function WebViewScreen() {
   const [url, setUrl] = useState<string | null>(null);
@@ -12,12 +13,17 @@ export default function WebViewScreen() {
 
   const [isDebuggerOn, setIsDebuggerOn] = useState(false);
 
-  useEffect(() => {}, []);
+  const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      console.log("test");
+    })();
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
       // Alert.alert("focused");
-
       fetchUrl();
       fetch_vConsole_status();
       return () => {};
@@ -25,10 +31,18 @@ export default function WebViewScreen() {
   );
 
   const fetch_vConsole_status = async () => {
+    if (!url) return;
     try {
       const storage_vConsole_status = await AsyncStorage.getItem(
         "@storage_vConsole_status"
       );
+      console.log("storage_vConsole_status_success", storage_vConsole_status);
+
+      ToastAndroid.show(
+        "storage_vConsole_status_success  successfully!",
+        ToastAndroid.SHORT
+      );
+
       setIsDebuggerOn(storage_vConsole_status === "true");
     } catch (error) {
       console.log("storage_vConsole_status_error", error);
@@ -36,54 +50,46 @@ export default function WebViewScreen() {
   };
   const fetchUrl = async () => {
     try {
+      console.log("fetchUrl");
       const value = await AsyncStorage.getItem("@storage_webview_uri");
+      console.log("value", value);
       if (value !== null) {
         setUrl(value);
       } else {
-        setHtmlContent(`
-          <html>
-            <body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: lightgrey;">
-              <div style="text-align: center;">
-                <h1>No URL found</h1>
-                <p>Please set a URL in the app settings.</p>
-                <button onclick="window.ReactNativeWebView.postMessage('refresh');" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-                  Refresh
-                </button>
-              </div>
-            </body>
-          </html>
-        `);
+        setUrl(null);
+        setHtmlContent(No_URL_found);
       }
     } catch (e) {
       console.error("Failed to fetch URL:", e);
-      setHtmlContent(`
-        <html>
-          <body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: lightgrey;">
-            <div style="text-align: center;">
-              <h1>Error loading content</h1>
-              <p>There was an error loading the content. Please try again later.</p>
-              <button onclick="window.ReactNativeWebView.postMessage('refresh');" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-                Refresh
-              </button>
-            </div>
-          </body>
-        </html>
-      `);
+      setHtmlContent(Error_loading_content);
     }
   };
 
   return (
     <View style={styles.container}>
+      <StatusBar hidden={false} />
       <WebView
         source={url ? { uri: url } : { html: htmlContent }}
         onError={(e) => console.log("Error loading URL:", e)}
         style={{ flex: 1 }}
         injectedJavaScript={isDebuggerOn ? VCONSOLE_SCRIPT : ""}
-        // injectedJavaScript={`window.ReactNativeWebView.postMessage('loaded');`}
         onMessage={(event) => {
+          console.log(event);
           if (event.nativeEvent.data === "refresh") {
-            fetchUrl(); // 重新获取URL并更新
+            fetchUrl();
+          } else if (event.nativeEvent.data === "VCONSOLE_SCRIPT") {
+            ToastAndroid.show("debugger  successfully!", ToastAndroid.SHORT);
+          } else if (event.nativeEvent.data === "setting") {
+            router.push("/View/ConfigScreen/WebViewConfigScreen");
           }
+        }}
+        // renderError={(e) => {
+        //   if (e === "WebKitErrorDomain") {
+        //     return;
+        //   }
+        // }}
+        renderError={(e) => {
+          return <></>;
         }}
       />
     </View>
